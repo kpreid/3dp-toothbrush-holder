@@ -7,6 +7,8 @@ extra_width = 1;
 slot_count = 2;
 
 epsilon = 0.01;
+reinforcement_d = 0.1;
+
 // aliases
 rr = rounding_radius;
 rd = rounding_radius * 2;
@@ -23,10 +25,14 @@ stickout = clearance_r + insertion_hole_d / 2 + rr + extra_width;
 main();
 
 module main() {
-    minkowski() {
-        sphere(r=rounding_radius, $fn=8);
+    difference() {
+        minkowski(convexity=10) {
+            sphere(r=rounding_radius, $fn=8);
+            
+            shrunk_geometry();
+        }
         
-        shrunk_geometry();
+        reinforcement_neg();
     }
 }
 
@@ -48,6 +54,17 @@ module shrunk_geometry() {
     translate([insertion_height, 0, 0]) {
         ring();
         scale([-1, 1, 1]) fillet();
+    }
+}
+
+module reinforcement_neg() {
+    xn = 4;
+    zn = 4;
+    for (xi = [0:xn])
+    for (zi = [0:zn]) {
+        translate([xi / xn * insertion_height, 0, (zi - zn / 2) / (zn + 1) * (basic_width)])
+        rotate([90, 0, 0])
+        cylinder(d=reinforcement_d, h=1000, center=true);
     }
 }
 
