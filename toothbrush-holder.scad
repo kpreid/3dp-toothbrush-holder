@@ -4,15 +4,18 @@ insertion_height = 110;
 clearance_d = 50;
 rounding_radius = 3;
 extra_width = 1;
+slot_count = 2;
 
 epsilon = 0.01;
+// aliases
 rr = rounding_radius;
 rd = rounding_radius * 2;
+slot_spacing = clearance_d;
 
 // calculated
 clearance_r = clearance_d / 2;
 round_bar_d = rd + epsilon;
-basic_width = insertion_hole_d + round_bar_d * 2 + extra_width * 2;
+basic_width = insertion_hole_d + round_bar_d * 2 + extra_width * 2 + clearance_d * (slot_count - 1);
 stickout = clearance_r + insertion_hole_d / 2 + rr + extra_width;
 
 // Coordinate scheme: x = vertical as mounted, y = depth (perpendicular to wall), z = width
@@ -21,7 +24,7 @@ main();
 
 module main() {
     minkowski() {
-        sphere(r=rounding_radius, $fn=16);
+        sphere(r=rounding_radius, $fn=8);
         
         shrunk_geometry();
     }
@@ -53,10 +56,12 @@ module ring() {
         translate([0, 0, -(basic_width - rd) / 2])
         cube([epsilon, stickout, basic_width - rd]);
         
-        translate([0, clearance_d / 2, 0])
-        rotate([0, 90, 0])
-        rotate([0, 0, 90])
-        cylinder(d=insertion_hole_d + rd, h=1000, center=true, $fn=6);
+        for (i = [0:slot_count - 1]) {
+            translate([0, clearance_d / 2, (i - slot_count / 2 + 0.5) * slot_spacing])
+            rotate([0, 90, 0])
+            rotate([0, 0, 90])
+            cylinder(d=insertion_hole_d + rd, h=1000, center=true, $fn=6);
+        }
     }
 }
 
