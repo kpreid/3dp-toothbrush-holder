@@ -7,7 +7,7 @@ extra_width = 1;
 slot_count = 2;
 
 epsilon = 0.01;
-reinforcement_d = 0.1;
+reinforcement_d = 0.4;
 
 // aliases
 rr = rounding_radius;
@@ -58,13 +58,13 @@ module shrunk_geometry() {
 }
 
 module reinforcement_neg() {
-    xn = 4;
-    zn = 4;
+    xn = 5;
+    zn = 3;
     for (xi = [0:xn])
     for (zi = [0:zn]) {
-        translate([xi / xn * insertion_height, 0, (zi - zn / 2) / (zn + 1) * (basic_width)])
+        translate([(xi + 0.5) / (xn + 1) * insertion_height, 0, (zi - zn / 2) / (zn + 1) * (basic_width)])
         rotate([90, 0, 0])
-        cylinder(d=reinforcement_d, h=1000, center=true);
+        cylinder(d=reinforcement_d, h=rd - reinforcement_d * 8, center=true, $fn=4);
     }
 }
 
