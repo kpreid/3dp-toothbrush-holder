@@ -3,6 +3,7 @@ Yet another 3D printed toothbrush — or razor — holder.
 * Wall mounted (bring your own adhesive)
 * No hard-to-clean concave areas
 * Closely holds the slim handles of non-electric items
+* Parameterized for any number of items.
 
 # License
 

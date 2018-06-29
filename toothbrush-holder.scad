@@ -1,15 +1,36 @@
-// chosen dimensions
-insertion_hole_d = 18;
-insertion_height = 110;
-clearance_d = 50;
-rounding_radius = 3;
-extra_width = 1;
-slot_count = 2;
+// Comments below are for the Thingiverse customizer.
+
+/* [Dimensions] */
+
+// Number of item slots.
+slot_count = 2;  // [1:1:20]
+
+// Diameter of each hole (across hexagon points, not flats). In millimeters.
+holding_diameter = 18; // [5:100]
+
+// Height from top hole to bottom plate; how high up the objects will be held. In millimeters.
+holding_height = 110; // [1:200]
+
+// Diameter to make available for objects' heads above the hole. This affects both the spacing of holes and the separation from the wall. In millimeters.
+object_clearance_diameter = 50; // [1:120]
+
+// General corner rounding and fillet radius. In millimeters.
+rounding_radius = 3;  // [1:10]
+
+// Extra flat surface beyond the minimum beside and in front of the holes. In millimeters.
+extra_width = 1; // [1:20]
+
+/* [Hidden] */
+// end of customizable parameters, start of implementation stuff
 
 epsilon = 0.01;
 reinforcement_d = 0.4;
 
-// aliases
+// aliases for customizer-names vs internal names
+insertion_hole_d = holding_diameter;
+insertion_height = holding_height;
+clearance_d = object_clearance_diameter;
+// aliases for shorthand
 rr = rounding_radius;
 rd = rounding_radius * 2;
 slot_spacing = clearance_d;
